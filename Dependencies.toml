@@ -320,7 +320,7 @@ modules = [
 ]
 
 [[package]]
-org = "wso2"
+org = "pama"
 name = "bal.timesheet.to.email"
 version = "0.1.0"
 dependencies = [
@@ -333,7 +333,7 @@ dependencies = [
 	{org = "wso2", name = "choreo.sendemail"}
 ]
 modules = [
-	{org = "wso2", packageName = "bal.timesheet.to.email", moduleName = "bal.timesheet.to.email"}
+	{org = "pama", packageName = "bal.timesheet.to.email", moduleName = "bal.timesheet.to.email"}
 ]
 
 [[package]]

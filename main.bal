@@ -1,9 +1,9 @@
 import ballerina/io;
+import ballerina/log;
+import ballerina/time;
 import ballerinax/postgresql;
 import ballerinax/postgresql.driver as _;
 import wso2/choreo.sendemail;
-import ballerina/log;
-import ballerina/time;
 
 const emailSubject = "Your Monthly Timesheet";
 configurable string email = ?;
@@ -23,7 +23,6 @@ type TimeEntry record {|
     int duration;
 |};
 
-
 postgresql:Client dbClient = check new (host = dbhost, username = dbUsername,
     password = dbPassword, database = dbName, port = dbport
 );
@@ -36,14 +35,12 @@ public function main() returns error? {
     TimeEntry[] timeEntries = [];
     stream<TimeEntry, error?> resultStream = dbClient->query(
             `SELECT * FROM worklogs`
-        );
+    );
     check from TimeEntry timeEntry in resultStream
         do {
             timeEntries.push(timeEntry);
         };
     check resultStream.close();
-    
-    
     // Send the email
     string _ = check emailClient->sendEmail(email, emailSubject, timeEntries.toString());
     io:println("Successfully sent the email.");
